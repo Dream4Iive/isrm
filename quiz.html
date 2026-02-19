@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfoSec Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f1a;
+    --card: #141728;
+    --card2: #1a1f35;
+    --accent: #4f6ef7;
+    --accent2: #7c3aed;
+    --green: #22c55e;
+    --red: #ef4444;
+    --text: #e8eaf6;
+    --muted: #8b92b8;
+    --border: #252a45;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image: radial-gradient(ellipse at 20% 20%, rgba(79,110,247,0.12) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 80%, rgba(124,58,237,0.1) 0%, transparent 60%);
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #4f6ef7, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .container {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  /* HOME */
+  #home { text-align: center; }
+  .start-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 16px 52px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(79,110,247,0.35);
+    letter-spacing: 0.03em;
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(79,110,247,0.5); }
+  .info-cards {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 28px;
+    min-width: 140px;
+  }
+  .info-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .info-card .label { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+
+  /* QUIZ */
+  #quiz { display: none; }
+  .progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 16px;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  .question-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--card2);
+    font-size: 0.95rem;
+  }
+  .option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: rgba(79,110,247,0.08);
+  }
+  .option.correct {
+    border-color: var(--green);
+    background: rgba(34,197,94,0.12);
+    color: #86efac;
+  }
+  .option.wrong {
+    border-color: var(--red);
+    background: rgba(239,68,68,0.12);
+    color: #fca5a5;
+  }
+  .option.show-correct {
+    border-color: var(--green);
+    background: rgba(34,197,94,0.08);
+    color: #86efac;
+  }
+  .option.disabled { cursor: default; pointer-events: none; }
+  .radio {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.18s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .option.correct .radio { border-color: var(--green); background: var(--green); }
+  .option.wrong .radio { border-color: var(--red); background: var(--red); }
+  .option.show-correct .radio { border-color: var(--green); background: var(--green); }
+  .radio-inner { width: 8px; height: 8px; border-radius: 50%; background: #fff; display: none; }
+  .option.correct .radio-inner,
+  .option.wrong .radio-inner,
+  .option.show-correct .radio-inner { display: block; }
+  .letter-badge {
+    background: var(--border);
+    color: var(--muted);
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'Syne', sans-serif;
+  }
+  .next-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    display: none;
+    transition: opacity 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .next-btn:hover { opacity: 0.9; }
+
+  /* RESULTS */
+  #results { display: none; text-align: center; }
+  .result-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 36px;
+    margin-bottom: 24px;
+  }
+  .score-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    position: relative;
+  }
+  .score-circle svg {
+    position: absolute; top: 0; left: 0;
+    transform: rotate(-90deg);
+  }
+  .score-circle circle {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+  }
+  .score-circle .bg-circle { stroke: var(--border); }
+  .score-circle .fg-circle {
+    stroke: var(--accent);
+    transition: stroke-dashoffset 1s ease;
+  }
+  .score-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4f6ef7, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative; z-index: 1;
+  }
+  .score-label { font-size: 0.8rem; color: var(--muted); z-index: 1; position: relative; }
+  .result-msg {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .result-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 32px; }
+  .result-stats {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .stat {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    min-width: 100px;
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; }
+  .stat-num.g { color: var(--green); }
+  .stat-num.r { color: var(--red); }
+  .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
+  .restart-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 15px 48px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    box-shadow: 0 8px 30px rgba(79,110,247,0.3);
+  }
+  .restart-btn:hover { opacity: 0.9; }
+
+  .q-num { color: var(--accent); font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HOME -->
+  <div id="home">
+    <h1>InfoSec Quiz</h1>
+    <p class="subtitle">Test your knowledge of Information Security</p>
+    <div class="info-cards">
+      <div class="info-card"><div class="num" id="total-count">—</div><div class="label">Questions in bank</div></div>
+      <div class="info-card"><div class="num">10</div><div class="label">Per session</div></div>
+      <div class="info-card"><div class="num">3–4</div><div class="label">Answer options</div></div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Start Test →</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    <h1 style="margin-bottom:6px;">InfoSec Quiz</h1>
+    <div class="progress-row">
+      <span id="q-counter">Question 1 of 10</span>
+      <span id="score-live">✓ 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-card" id="question-card">
+      <div class="q-num" id="q-num">QUESTION 1</div>
+      <div class="question-text" id="question-text"></div>
+      <div id="options-container"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h1>Results</h1>
+    <p class="subtitle">Here's how you did</p>
+    <div class="result-card">
+      <div class="score-circle" id="score-circle">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle class="bg-circle" cx="70" cy="70" r="62" />
+          <circle class="fg-circle" id="fg-circle" cx="70" cy="70" r="62" stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
+        </svg>
+        <div class="score-num" id="score-pct">0%</div>
+        <div class="score-label">Score</div>
+      </div>
+      <div class="result-msg" id="result-msg">Good job!</div>
+      <div class="result-sub" id="result-sub"></div>
+      <div class="result-stats">
+        <div class="stat"><div class="stat-num g" id="correct-count">0</div><div class="stat-label">Correct</div></div>
+        <div class="stat"><div class="stat-num r" id="wrong-count">0</div><div class="stat-label">Wrong</div></div>
+        <div class="stat"><div class="stat-num" id="total-q">10</div><div class="stat-label">Total</div></div>
+      </div>
+      <button class="restart-btn" onclick="restartQuiz()">Try Again →</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Parse questions from embedded data
+const RAW = `Reasonable sufficiency of a protection system implies that creating an insurmountable system is, in principle,|impossible|harmful|possible|economically justified
+The principle of least privilege requires granting personnel only those __________ rights that are necessary for performing their official duties.|access|control|protection|administrative
+The principle of protecting the means of a security system requires that any protective measure or tool, in turn, be provided with ____________.|protection|trust|monitoring|access
+Information for internal use within an organization is accessible only to ____________.|information system users|visitors|anyone|external partners
+What ranks second in the list of protection objects according to the order of priorities?|information|individual|material assets|infrastructure
+What constitutes the informational basis of an organization's managerial activity?|the legal environment of the organization's operation|a high level of employees' professionalism|a high level of managers' professionalism|technical equipment
+To whom is the principle of limitation of authority applied?|personnel|information security tools|an intruder|external auditors
+For what purpose is a threat profile used?|for the formal description of the static characteristics of a threat|for risk analysis|for dynamic response|for documentation only
+Which actions constitute an attempt against information security?|malicious actions|actions for which liability is not stipulated|actions for which liability is stipulated|unintentional actions
+The presence of a vast volume of information within an organization's legal framework|complicates the search for optimal solutions|facilitates the search for optimal solutions|does not affect information security|simplifies compliance
+Information security threats to an information asset, when ensuring availability, are classified by ______|information destruction|information distortion|information copying|information leakage
+______ sources of threats are subjects whose actions can be classified as intentional or accidental offenses.|subjective|technological|anthropogenic|natural
+To directly identify a risky event as an information security event is ______|practically impossible|based on audit results|possible only in cases of basic risks|always possible
+The survivability property depends most on ______|the risk management skills of the organization's management|availability of modern software|experts' skills|hardware redundancy
+Systematic risk management in an organization should begin with ______.|defining the scope of risk management|selecting a risk analysis method|an audit of information assets|risk acceptance
+When implementing a process-based risk management model, at the monitoring and audit stage ______.|risk factors are controlled and audits are conducted|policies and assessment methods are defined|the methodology is improved|risks are accepted
+When implementing a process-based risk management model, at the support and approval stage ______|policies and assessment methods are defined|risks are reassessed|risk factors are controlled|controls are eliminated
+What can ensure the continuous effectiveness of security controls in an organization?|reassessing risks|disconnecting from the Internet|updating software|reducing staff
+An organization pays attention to and implements an information security system ______.|simultaneously with the implementation of a business process|after a threat has been realized|when real threats appear|only after incidents
+The Information Risk Management (IRM) security policy is based on ______.|the provisions of the information security policy|modern software and qualified personnel|modern security controls|external audits
+For conducting an information security risk analysis, an organization first determines ______.|which assets require protection|which company to hire|which risk analysis method should be used|budget limits
+The initiators of information security risk management in an organization are ______.|the organization's management|information security risk analysis experts|information system users|external consultants
+The foundation of an Information Security Management System (ISMS) is ______.|a risk management system|the implementation of systematic risk analysis|the selection of a risk analysis method|security software
+An organization implements security controls when the overall information security risk ______.|is unacceptable|represents 30% of absolute security|always implements controls|is minimal
+Which type of policy defines overall objectives, responsibilities, and strategic direction of information security?|Organizational policy|Issue-specific policy|System-specific policy|Informative policy
+What is the main goal of Mandatory Access Control?|To prevent information leakage from higher to lower levels|To simplify system administration|To reduce hardware costs|To eliminate the need for passwords
+What is an information security policy?|A set of documented management decisions aimed at protecting information|A set of undocumented technical rules|A software tool for data encryption|A list of employee responsibilities only
+In the Discretionary Access Control (DAC) model, who determines access rights to a resource?|Resource owner|Government regulators|Operating system kernel|External auditors
+In Role-Based Access Control (RBAC), access to resources is granted based on:|User roles within the organization|Network location|User's personal identity only|File ownership
+Which weakness is typical for the DAC model?|It is vulnerable to Trojan horse attacks|It does not support file systems|It cannot assign permissions|It is too expensive to implement
+In Mandatory Access Control (MAC), access decisions are based on:|Security labels and clearance levels|User preferences|File size|Network speed
+Which principle means that protection measures should be adequate to existing threats?|Sufficiency|Simplicity|Openness|Flexibility
+Which departments should be involved in developing components of the Information Security Program?|Human Resources and Legal|Customer Support and PR|Finance and Logistics|Marketing and Sales
+What is the main purpose of an Information Security Program in an organization?|To define long-term security strategy and protect the organization|To eliminate all business risks|To replace legal departments|To reduce employee workload
+What does an Nmap SYN scan (-sS) indicate when a SYN/ACK response is received?|The port is open|The port is closed|The port is filtered|The host is offline
+Which tool is a Python-based framework used for packet crafting and reconnaissance?|Scapy|Nikto|Wireshark|Recon-ng
+Which tool is commonly used to identify technical and administrative domain contacts?|Whois|Nmap|Wireshark|Scapy
+What is the primary goal of reconnaissance in a cyber attack?|To gather information about the target|To bypass authentication|To deploy malware|To exploit vulnerabilities immediately
+Why is penetration testing necessary even when security defenses are already installed?|To verify defenses under real attack conditions|To replace firewalls|To eliminate all risks|To reduce system costs
+Which statement best describes passive reconnaissance?|It gathers information without directly interacting with the target|It exploits open ports|It sends probes directly to the target|It always triggers IDS
+Which regulation requires organizations that handle cardholder data to perform regular penetration testing?|PCI DSS|HIPAA|GDPR|GLBA
+Which of the following is an example of a passive reconnaissance technique?|OSINT gathering|TCP SYN scan|TCP FIN scan|UDP port scan
+Organizational-level vulnerabilities include _____|management actions|users' actions|technical bugs|hardware failures
+The probability of an event means _____|the probability that a threat will be realized|that the threat will not be realized|guaranteed occurrence|zero impact
+Subjective vulnerabilities depend on _____|employees' actions|software bugs|network protocols|hardware defects
+The value of a vulnerability means _____|the probability that this vulnerability will be exploited if the threat is realized|the cost of hardware|number of users|probability of zero risk
+The level of risk is determined by _____|combining the probability of an event and its consequences|only probability|only consequences|management opinion
+Is a purely quantitative risk analysis possible?|no|yes|sometimes|always
+In expert assessment of vulnerabilities, accessibility defines _____|the ease of exploiting the vulnerability|number of elements|signal transmission ability|user count`;
+
+const QUESTIONS_PER_SESSION = 10;
+const OPTIONS_COUNT = 3; // show 3 options (correct + 2 wrong)
+
+let allQuestions = [];
+let sessionQuestions = [];
+let currentIndex = 0;
+let correctCount = 0;
+let answered = false;
+
+function parseQuestions() {
+  return RAW.trim().split('\n').map(line => {
+    const parts = line.split('|');
+    return { question: parts[0], correct: parts[1], wrong: parts.slice(2) };
+  });
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildOptions(q) {
+  // pick random wrong answers (2)
+  const wrongPool = shuffle(q.wrong).slice(0, OPTIONS_COUNT - 1);
+  const options = shuffle([q.correct, ...wrongPool]);
+  return options;
+}
+
+function startQuiz() {
+  allQuestions = parseQuestions();
+  sessionQuestions = shuffle(allQuestions).slice(0, QUESTIONS_PER_SESSION);
+  currentIndex = 0;
+  correctCount = 0;
+
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  answered = false;
+  const q = sessionQuestions[currentIndex];
+  const total = sessionQuestions.length;
+
+  document.getElementById('q-counter').textContent = `Question ${currentIndex + 1} of ${total}`;
+  document.getElementById('score-live').textContent = `✓ ${correctCount}`;
+  document.getElementById('progress-fill').style.width = `${(currentIndex / total) * 100}%`;
+  document.getElementById('q-num').textContent = `QUESTION ${currentIndex + 1}`;
+  document.getElementById('question-text').textContent = q.question;
+  document.getElementById('next-btn').style.display = 'none';
+
+  const opts = buildOptions(q);
+  const letters = ['A', 'B', 'C', 'D'];
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+
+  opts.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<div class="radio"><div class="radio-inner"></div></div><div class="letter-badge">${letters[i]}</div><span>${opt}</span>`;
+    div.onclick = () => selectOption(div, opt, q.correct, container);
+    container.appendChild(div);
+  });
+
+  // animate card
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'fadeIn 0.3s ease';
+}
+
+function selectOption(selected, selectedText, correctText, container) {
+  if (answered) return;
+  answered = true;
+
+  const options = container.querySelectorAll('.option');
+  options.forEach(opt => opt.classList.add('disabled'));
+
+  const isCorrect = selectedText === correctText;
+
+  if (isCorrect) {
+    selected.classList.add('correct');
+    correctCount++;
+  } else {
+    selected.classList.add('wrong');
+    // highlight correct
+    options.forEach(opt => {
+      if (opt.querySelector('span').textContent === correctText) {
+        opt.classList.add('show-correct');
+      }
+    });
+  }
+
+  document.getElementById('score-live').textContent = `✓ ${correctCount}`;
+
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.style.display = 'block';
+  const isLast = currentIndex === sessionQuestions.length - 1;
+  nextBtn.textContent = isLast ? 'See Results →' : 'Next Question →';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= sessionQuestions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+
+  const total = sessionQuestions.length;
+  const pct = Math.round((correctCount / total) * 100);
+
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('correct-count').textContent = correctCount;
+  document.getElementById('wrong-count').textContent = total - correctCount;
+  document.getElementById('total-q').textContent = total;
+
+  let msg, sub;
+  if (pct >= 90) { msg = '🏆 Excellent!'; sub = 'Outstanding knowledge of InfoSec!'; }
+  else if (pct >= 75) { msg = '👏 Great job!'; sub = 'You have solid InfoSec knowledge.'; }
+  else if (pct >= 60) { msg = '👍 Good effort!'; sub = 'Keep studying to improve further.'; }
+  else if (pct >= 40) { msg = '📚 Keep learning!'; sub = 'Review the material and try again.'; }
+  else { msg = '💪 Don\'t give up!'; sub = 'More practice will make you better.'; }
+
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-sub').textContent = sub;
+
+  // animate circle
+  const circumference = 389.6;
+  const offset = circumference - (pct / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('fg-circle').style.strokeDashoffset = offset;
+  }, 100);
+}
+
+function restartQuiz() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('fg-circle').style.strokeDashoffset = 389.6;
+  startQuiz();
+}
+
+// Init
+allQuestions = parseQuestions();
+document.getElementById('total-count').textContent = allQuestions.length;
+</script>
+</body>
+</html>
