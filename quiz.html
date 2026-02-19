@@ -341,7 +341,7 @@
       <div class="result-stats">
         <div class="stat"><div class="stat-num g" id="correct-count">0</div><div class="stat-label">Correct</div></div>
         <div class="stat"><div class="stat-num r" id="wrong-count">0</div><div class="stat-label">Wrong</div></div>
-        <div class="stat"><div class="stat-num" id="total-q">10</div><div class="stat-label">Total</div></div>
+        <div class="stat"><div class="stat-num" id="total-q">30</div><div class="stat-label">Total</div></div>
       </div>
       <button class="restart-btn" onclick="restartQuiz()">Try Again →</button>
     </div>
@@ -356,11 +356,11 @@ The principle of least privilege requires granting personnel only those ________
 The principle of protecting the means of a security system requires that any protective measure or tool, in turn, be provided with ____________.|protection|trust|monitoring|access
 Information for internal use within an organization is accessible only to ____________.|information system users|visitors|anyone|external partners
 What ranks second in the list of protection objects according to the order of priorities?|information|individual|material assets|infrastructure
-What constitutes the informational basis of an organization’s managerial activity?|the legal environment of the organization’s operation|a high level of employees’ professionalism|a high level of managers’ professionalism|technical equipment
+What constitutes the informational basis of an organization's managerial activity?|the legal environment of the organization's operation|a high level of employees' professionalism|a high level of managers' professionalism|technical equipment
 To whom is the principle of limitation of authority applied?|personnel|information security tools|an intruder|external auditors
 For what purpose is a threat profile used?|for the formal description of the static characteristics of a threat|for risk analysis|for dynamic response|for documentation only
 Which actions constitute an attempt against information security?|malicious actions|actions for which liability is not stipulated|actions for which liability is stipulated|unintentional actions
-The presence of a vast volume of information within an organization’s legal framework|complicates the search for optimal solutions|facilitates the search for optimal solutions|does not affect information security|simplifies compliance
+The presence of a vast volume of information within an organization's legal framework|complicates the search for optimal solutions|facilitates the search for optimal solutions|does not affect information security|simplifies compliance
 Information security threats to an information asset, when ensuring availability, are classified by ______|information destruction|information distortion|information copying|information leakage
 ______ sources of threats are subjects whose actions can be classified as intentional or accidental offenses.|subjective|technological|anthropogenic|natural
 To directly identify a risky event as an information security event is ______|practically impossible|based on audit results|possible only in cases of basic risks|always possible
@@ -372,7 +372,7 @@ What can ensure the continuous effectiveness of security controls in an organiza
 An organization pays attention to and implements an information security system ______.|simultaneously with the implementation of a business process|after a threat has been realized|when real threats appear|only after incidents
 The Information Risk Management (IRM) security policy is based on ______.|the provisions of the information security policy|modern software and qualified personnel|modern security controls|external audits
 For conducting an information security risk analysis, an organization first determines ______.|which assets require protection|which company to hire|which risk analysis method should be used|budget limits
-The initiators of information security risk management in an organization are ______.|the organization’s management|information security risk analysis experts|information system users|external consultants
+The initiators of information security risk management in an organization are ______.|the organization's management|information security risk analysis experts|information system users|external consultants
 The foundation of an Information Security Management System (ISMS) is ______.|a risk management system|the implementation of systematic risk analysis|the selection of a risk analysis method|security software
 An organization implements security controls when the overall information security risk ______.|is unacceptable|represents 30% of absolute security|always implements controls|is minimal
 Which type of policy defines overall objectives, responsibilities, and strategic direction of information security?|Organizational policy|Issue-specific policy|System-specific policy|Informative policy
@@ -393,12 +393,6 @@ Why is penetration testing necessary even when security defenses are already ins
 Which statement best describes passive reconnaissance?|It gathers information without directly interacting with the target|It exploits open ports|It sends probes directly to the target|It always triggers IDS
 Which regulation requires organizations that handle cardholder data to perform regular penetration testing?|PCI DSS|HIPAA|GDPR|GLBA
 Which of the following is an example of a passive reconnaissance technique?|OSINT gathering|TCP SYN scan|TCP FIN scan|UDP port scan
-What is the main goal of Mandatory Access Control?|To prevent information leakage from higher to lower levels|To simplify system administration|To reduce hardware costs|To eliminate passwords
-In Role-Based Access Control (RBAC), access to resources is granted based on:|User roles within the organization|Network location|User identity only|File ownership
-Which type of policy defines overall objectives, responsibilities, and strategic direction of information security?|Organizational policy|Issue-specific policy|System-specific policy|Informative policy
-What is an information security policy?|A set of documented management decisions aimed at protecting information|A software encryption tool|A list of passwords|Undocumented rules
-Which departments should be involved in developing components of the Information Security Program?|Human Resources and Legal|Finance and Logistics|Marketing and Sales|Customer Support
-What is the main purpose of an Information Security Program in an organization?|To define long-term security strategy and protect the organization|To eliminate all risks|To reduce employee workload|To replace legal departments
 Organizational-level vulnerabilities include _____|management actions|users' actions|technical bugs|hardware failures
 The probability of an event means _____|the probability that a threat will be realized|that the threat will not be realized|guaranteed occurrence|zero impact
 Subjective vulnerabilities depend on _____|employees' actions|software bugs|network protocols|hardware defects
@@ -419,7 +413,7 @@ In expert assessment of vulnerabilities, accessibility defines _____|the ease of
 The level of risk is determined by _____|combining the probability of an event and its consequences|only probability|only consequences|manegement opinion
 Which principle means that protection measures should be adequate to existing threats?|Sufficiency|Simplicity|Opennes|Flexibility`;
 
-const QUESTIONS_PER_SESSION = 10;
+const QUESTIONS_PER_SESSION = 30;
 const OPTIONS_COUNT = 3; // show 3 options (correct + 2 wrong)
 
 let allQuestions = [];
