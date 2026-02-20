@@ -301,7 +301,7 @@
     <p class="subtitle">Test your knowledge of Information Security</p>
     <div class="info-cards">
       <div class="info-card"><div class="num" id="total-count">—</div><div class="label">Questions in bank</div></div>
-      <div class="info-card"><div class="num">30</div><div class="label">Per session</div></div>
+      <div class="info-card"><div class="num">10</div><div class="label">Per session</div></div>
       <div class="info-card"><div class="num">3–4</div><div class="label">Answer options</div></div>
     </div>
     <button class="start-btn" onclick="startQuiz()">Start Test →</button>
@@ -341,7 +341,7 @@
       <div class="result-stats">
         <div class="stat"><div class="stat-num g" id="correct-count">0</div><div class="stat-label">Correct</div></div>
         <div class="stat"><div class="stat-num r" id="wrong-count">0</div><div class="stat-label">Wrong</div></div>
-        <div class="stat"><div class="stat-num" id="total-q">30</div><div class="stat-label">Total</div></div>
+        <div class="stat"><div class="stat-num" id="total-q">10</div><div class="stat-label">Total</div></div>
       </div>
       <button class="restart-btn" onclick="restartQuiz()">Try Again →</button>
     </div>
@@ -351,75 +351,44 @@
 
 <script>
 // Parse questions from embedded data
-const RAW = `Reasonable sufficiency of a protection system implies that creating an insurmountable system is, in principle,|impossible|harmful|possible|economically justified
-The principle of least privilege requires granting personnel only those __________ rights that are necessary for performing their official duties.|access|control|protection|administrative
-The principle of protecting the means of a security system requires that any protective measure or tool, in turn, be provided with ____________.|protection|trust|monitoring|access
-Information for internal use within an organization is accessible only to ____________.|information system users|visitors|anyone|external partners
-What ranks second in the list of protection objects according to the order of priorities?|information|individual|material assets|infrastructure
-What constitutes the informational basis of an organization’s managerial activity?|the legal environment of the organization’s operation|a high level of employees’ professionalism|a high level of managers’ professionalism|technical equipment
-To whom is the principle of limitation of authority applied?|personnel|information security tools|an intruder|external auditors
-For what purpose is a threat profile used?|for the formal description of the static characteristics of a threat|for risk analysis|for dynamic response|for documentation only
-Which actions constitute an attempt against information security?|malicious actions|actions for which liability is not stipulated|actions for which liability is stipulated|unintentional actions
-The presence of a vast volume of information within an organization’s legal framework|complicates the search for optimal solutions|facilitates the search for optimal solutions|does not affect information security|simplifies compliance
-Information security threats to an information asset, when ensuring availability, are classified by ______|information destruction|information distortion|information copying|information leakage
-______ sources of threats are subjects whose actions can be classified as intentional or accidental offenses.|subjective|technological|anthropogenic|natural
-To directly identify a risky event as an information security event is ______|practically impossible|based on audit results|possible only in cases of basic risks|always possible
-The survivability property depends most on ______|the risk management skills of the organization's management|availability of modern software|experts' skills|hardware redundancy
-Systematic risk management in an organization should begin with ______.|defining the scope of risk management|selecting a risk analysis method|an audit of information assets|risk acceptance
-When implementing a process-based risk management model, at the monitoring and audit stage ______.|risk factors are controlled and audits are conducted|policies and assessment methods are defined|the methodology is improved|risks are accepted
-When implementing a process-based risk management model, at the support and approval stage ______|policies and assessment methods are defined|risks are reassessed|risk factors are controlled|controls are eliminated
-What can ensure the continuous effectiveness of security controls in an organization?|reassessing risks|disconnecting from the Internet|updating software|reducing staff
-An organization pays attention to and implements an information security system ______.|simultaneously with the implementation of a business process|after a threat has been realized|when real threats appear|only after incidents
-The Information Risk Management (IRM) security policy is based on ______.|the provisions of the information security policy|modern software and qualified personnel|modern security controls|external audits
-For conducting an information security risk analysis, an organization first determines ______.|which assets require protection|which company to hire|which risk analysis method should be used|budget limits
-The initiators of information security risk management in an organization are ______.|the organization’s management|information security risk analysis experts|information system users|external consultants
-The foundation of an Information Security Management System (ISMS) is ______.|a risk management system|the implementation of systematic risk analysis|the selection of a risk analysis method|security software
-An organization implements security controls when the overall information security risk ______.|is unacceptable|represents 30% of absolute security|always implements controls|is minimal
-Which type of policy defines overall objectives, responsibilities, and strategic direction of information security?|Organizational policy|Issue-specific policy|System-specific policy|Informative policy
-What is the main goal of Mandatory Access Control?|To prevent information leakage from higher to lower levels|To simplify system administration|To reduce hardware costs|To eliminate the need for passwords
-What is an information security policy?|A set of documented management decisions aimed at protecting information|A set of undocumented technical rules|A software tool for data encryption|A list of employee responsibilities only
-In the Discretionary Access Control (DAC) model, who determines access rights to a resource?|Resource owner|Government regulators|Operating system kernel|External auditors
-In Role-Based Access Control (RBAC), access to resources is granted based on:|User roles within the organization|Network location|User's personal identity only|File ownership
-Which weakness is typical for the DAC model?|It is vulnerable to Trojan horse attacks|It does not support file systems|It cannot assign permissions|It is too expensive to implement
-In Mandatory Access Control (MAC), access decisions are based on:|Security labels and clearance levels|User preferences|File size|Network speed
-Which principle means that protection measures should be adequate to existing threats?|Sufficiency|Simplicity|Openness|Flexibility
-Which departments should be involved in developing components of the Information Security Program?|Human Resources and Legal|Customer Support and PR|Finance and Logistics|Marketing and Sales
-What is the main purpose of an Information Security Program in an organization?|To define long-term security strategy and protect the organization|To eliminate all business risks|To replace legal departments|To reduce employee workload
-What does an Nmap SYN scan (-sS) indicate when a SYN/ACK response is received?|The port is open|The port is closed|The port is filtered|The host is offline
-Which tool is a Python-based framework used for packet crafting and reconnaissance?|Scapy|Nikto|Wireshark|Recon-ng
-Which tool is commonly used to identify technical and administrative domain contacts?|Whois|Nmap|Wireshark|Scapy
-What is the primary goal of reconnaissance in a cyber attack?|To gather information about the target|To bypass authentication|To deploy malware|To exploit vulnerabilities immediately
-Why is penetration testing necessary even when security defenses are already installed?|To verify defenses under real attack conditions|To replace firewalls|To eliminate all risks|To reduce system costs
-Which statement best describes passive reconnaissance?|It gathers information without directly interacting with the target|It exploits open ports|It sends probes directly to the target|It always triggers IDS
-Which regulation requires organizations that handle cardholder data to perform regular penetration testing?|PCI DSS|HIPAA|GDPR|GLBA
-Which of the following is an example of a passive reconnaissance technique?|OSINT gathering|TCP SYN scan|TCP FIN scan|UDP port scan
-What is the main goal of Mandatory Access Control?|To prevent information leakage from higher to lower levels|To simplify system administration|To reduce hardware costs|To eliminate passwords
-In Role-Based Access Control (RBAC), access to resources is granted based on:|User roles within the organization|Network location|User identity only|File ownership
-Which type of policy defines overall objectives, responsibilities, and strategic direction of information security?|Organizational policy|Issue-specific policy|System-specific policy|Informative policy
-What is an information security policy?|A set of documented management decisions aimed at protecting information|A software encryption tool|A list of passwords|Undocumented rules
-Which departments should be involved in developing components of the Information Security Program?|Human Resources and Legal|Finance and Logistics|Marketing and Sales|Customer Support
-What is the main purpose of an Information Security Program in an organization?|To define long-term security strategy and protect the organization|To eliminate all risks|To reduce employee workload|To replace legal departments
-Organizational-level vulnerabilities include _____|management actions|users' actions|technical bugs|hardware failures
-The probability of an event means _____|the probability that a threat will be realized|that the threat will not be realized|guaranteed occurrence|zero impact
-Subjective vulnerabilities depend on _____|employees' actions|software bugs|network protocols|hardware defects
-The value of a vulnerability means _____|the probability that this vulnerability will be exploited if the threat is realized|the cost of hardware|number of users|probability of zero risk
-The level of risk is determined by _____|combining the probability of an event and its consequences|only probability|only consequences|management opinion
-For conducting an information security risk analysis, an organization first determines _____|which assets require protection|budget|analysis company|audit date
-Systematic risk management in an organization should begin with _____|defining the scope of risk management|audit|method selection|control implementation
-An organization implements security controls when the overall information security risk _____|is unacceptable|is low|is zero|is theoretical
-The foundation of an Information Security Management System (ISMS) is _____|a risk management system|software installation|audit process|method selection
-What can ensure the continuous effectiveness of security controls?|reassessing risks|disconnecting internet|buying hardware|removing firewalls
-The Information Risk Management (IRM) security policy is based on _____|the provisions of the information security policy|modern software|external audits|budget planning
-The initiators of information security risk management in an organization are _____|the organization's management|system users|external hackers|consultants
-When implementing a process-based risk management model, at the monitoring and audit stage _____|risk factors are controlled and audits are conducted|policies are written|risks are accepted|methods selected
-When implementing a process-based risk management model, at the support stage _____|risks are reassessed|risk factors are ignored|policies deleted|systems disabled
-Information security threats ensuring availability are classified by _____|information destruction|information copying|information distortion|information encryption
-Is a purely quantitative risk analysis possible?|no|yes|sometimes|always
-In expert assessment of vulnerabilities, accessibility defines _____|the ease of exploiting the vulnerability|number of elements|signal transmission ability|user count
-The level of risk is determined by _____|combining the probability of an event and its consequences|only probability|only consequences|manegement opinion
-Which principle means that protection measures should be adequate to existing threats?|Sufficiency|Simplicity|Opennes|Flexibility`;
+const RAW = `What is the main goal of reconnaissance?|To gather information about a target|To exploit vulnerabilities|To report findings to management|To deploy malware
+Which of the following is a passive reconnaissance tool?|theHarvester|Nmap|Netcat|Scapy
+What does "attack surface" refer to?|All exposed entry points an attacker could exploit|The target's physical location|The list of tools used in recon|The legal scope of a penetration test
+Tom reviews a scan and finds an internal IP address disclosure vulnerability. What protocol likely caused this?|NAT|TLS|SSH|VPN
+Which CVSS metric indicates the type of user account an attacker must use?|Privileges Required|Attack Vector|Confidentiality Vectors|Attack Complexity
+Which CVSS Attack Complexity value indicates the attack is simplest to exploit?|Low|High|Medium|Severe
+Which CVSS value for Confidentiality/Integrity/Availability indicates total system compromise?|H|N|A|L
+What is the most recent version of CVSS currently available?|4.0|2.0|3.0|3.1
+Which metric is NOT included in the CVSS exploitability score?|Vulnerability Age|Attack Vector|Attack Complexity|Privileges Required
+A vulnerability has a CVSS base score of 6.5. Which risk category does it fall into?|Medium|Low|High|Critical
+A vulnerability reported by a scanner did not exist because the system was already patched. What type of error is this?|False Positive|False Negative|True Positive|True Negative
+Which of the following is NOT a common source correlated with vulnerability scan results?|Database Tables|Logs|SIEM|Configuration Management System
+Which characteristic is NOT required to consider a vulnerability scan complete?|All user accounts were covered|All network segments have been covered|The scan had sufficient privileges|All applications were covered
+In what attack does the attacker place more information in memory than is allocated?|Buffer Overflow|SQL Injection|LDAP Injection|Cross-site Scripting
+Which protocol should NEVER be used on a public network?|Telnet|SSH|HTTPS|SFTP
+Which transport encryption protocol is the best choice for a new public website?|TLS 1.3|SSL 2.0|SSL 3.0|TLS 1.0
+Which condition would NOT result in a certificate warning during a vulnerability scan?|Inclusion of a public encryption key|Use of an untrusted CA|Expiration of the certificate|Mismatch in certificate name
+What software component enforces separation of guest systems in a virtualized infrastructure?|Hypervisor|Guest Operating System|Host Operating System|Memory Controller
+In what attack does the attacker seek access to resources assigned to a different virtual machine?|VM Escape|Management Interface Brute Force|LDAP Injection|DNS Amplification
+Which term is NOT typically used to describe connecting physical devices to a network?|IDS|IoT|ICS|SCADA
+An attacker posted a malicious message on a web forum to target visiting users. What attack type is most likely?|Cross-site Scripting|SQL Injection|Malware Injection|LDAP Injection
+Web server logs show semicolons and apostrophes in user queries after an attack. What attack is suspected?|SQL Injection|LDAP Injection|Cross-site Scripting|Buffer Overflow
+A vulnerability scanner rates a finding 9.3/10 on TCP 445. What exploit type is most likely?|SMB exploit|SQL injection|CGI exploit|MIB exploit
+After gaining access to a Windows system, an attacker runs SchTasks /create /SC Weekly /TN "Antivirus" /TR "C:\...". What was accomplished?|He scheduled his own executable to run weekly|He set up a weekly antivirus scan|He set up a job called weekly|Nothing; this only runs on Linux
+After exploiting a Linux system, an attacker wants to list all user accounts and home directories. Which location provides this?|/etc/passwd|/etc/shadow|/var/usr|/home
+Days after exploiting a target with Meterpreter, an attacker loses access but the vulnerability is still open. What most likely happened?|A malware scan discovered Meterpreter and removed it|The system was patched|The system was rebooted|Meterpreter crashed
+An attacker wants to exfiltrate data from a Windows system with least chance of detection. Which method is best?|Use PowerShell to base64-encode data, then post to a public HTTPS code repository|Send via outbound HTTP as plain text|Hash the data, then send via outbound HTTPS|Use PowerShell to base64-encode, then use SSH tunnel
+Rules of engagement say no tools can be added to compromised systems. What technique must the attacker use?|Compromise using fileless malware, then use living-off-the-land techniques|Compromise using Metasploit, then use living-off-the-land techniques|Compromise using fileless malware, then cover tracks only|Compromise using Metasploit, then clean dropped files and use system utilities
+An attacker has valid usernames but no passwords and suspects poor password practices. What attack can she use?|Dictionary attacks|Rainbow tables|Thesaurus attacks|Meterpreter
+What built-in Windows tool can allow command-line PowerShell access from other systems?|RDP|VNC|PowerSSHell|PSRemote
+Which of the following is NOT a common method for maintaining persistence on Linux servers?|Scheduled tasks|cron jobs|Trojaned services|Modified daemons
+An attacker discovers information exposure vulnerabilities but no user or service info. What priority should exploiting them be?|Low priority; only if time permits|High priority; exploit early|Medium priority; after other exploits|Do not exploit
+An attacker uses leaked passwords attempting one password per account before moving to the next. What attack is this?|Password spraying|A firehose attack|Pass the hash|A cloned password attack
+An attacker wants to capture user hashes from Windows network broadcast messages. Which tool is best?|Responder|Metasploit|Impacket|Wireshark
+BloodHound is used during a penetration test. What does it help with?|Visualize Active Directory environments|Capture encrypted network traffic|Visualize network traffic flows|Find encrypted files in network shares
+A penetration tester performs a PCI DSS engagement. What technique is most likely used for network segmentation testing?|Firewall rule validation between segments|Testing for 802.1q trunking on the Internet connection|Testing for physical segmentation|Antimalware rule validation between segments`;
 
-const QUESTIONS_PER_SESSION = 30;
+const QUESTIONS_PER_SESSION = 10;
 const OPTIONS_COUNT = 3; // show 3 options (correct + 2 wrong)
 
 let allQuestions = [];
